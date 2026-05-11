@@ -1,4 +1,5 @@
 #include "server.h"
+#include "miniftp_log.h"
 #include "utils.h"
 #include "config.h"
 #include "pi.h"

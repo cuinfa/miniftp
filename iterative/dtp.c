@@ -1,5 +1,6 @@
 #define _GNU_SOURCE
 #include "dtp.h"
+#include "miniftp_log.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

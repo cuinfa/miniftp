@@ -1,5 +1,6 @@
 #define _POSIX_C_SOURCE 200809L
 #include "server.h"
+#include "miniftp_log.h"
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>

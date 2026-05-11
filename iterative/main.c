@@ -1,4 +1,5 @@
 #include "arguments.h"
+#include "miniftp_log.h"
 #include "server.h"
 #include "utils.h"
 #include "signals.h"
@@ -10,6 +11,7 @@
 #include <errno.h>
 
 int main(int argc, char **argv) {
+  log_init("miniftp", 1, NULL);
   struct arguments args;
 
   if (parse_arguments(argc, argv, &args) != 0)
@@ -42,5 +44,6 @@ int main(int argc, char **argv) {
   close_fd(listen_fd, "listening socket");
 
   // https://en.cppreference.com/w/c/program/EXIT_status
+  log_close();
   return EXIT_SUCCESS;
 }

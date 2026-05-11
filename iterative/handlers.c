@@ -1,6 +1,7 @@
 // handlers.c
 
 #include "responses.h"
+#include "miniftp_log.h"
 #include "pi.h"
 #include "dtp.h"
 #include "session.h"

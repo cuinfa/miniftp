@@ -1,5 +1,6 @@
 // session.c
 #include "session.h"
+#include "miniftp_log.h"
 #include <string.h>
 #include <unistd.h>
 

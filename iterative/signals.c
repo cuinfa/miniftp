@@ -1,6 +1,7 @@
 // signal.c
 
 #include <stdio.h>
+#include "miniftp_log.h"
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>

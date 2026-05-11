@@ -1,4 +1,5 @@
 #include "config.h"
+#include "miniftp_log.h"
 #include "arguments.h"
 #include <string.h>
 #include <argp.h>
