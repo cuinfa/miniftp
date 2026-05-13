@@ -3,12 +3,12 @@
 #include "arguments.h"
 #include <string.h>
 #include <argp.h>
-#include <unistd.h>  // for geteuid()
+#include <unistd.h>
 #include <ifaddrs.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <stdlib.h>
-#include <errno.h>      // perror()
+#include <errno.h>
 
 static struct argp_option options[] = {
   { "port",    'p', "PORT", 0, PORT_DOC, 0 },
@@ -16,7 +16,6 @@ static struct argp_option options[] = {
   { 0 }
 };
 
-// --- CLI options ---
 const char *argp_program_version = "server " VERSION;
 const char *argp_program_bug_address = BUG_EMAIL;
 static char doc[] = "Simple FTP server";
@@ -27,7 +26,7 @@ static int is_valid_local_ip(const char *ip_str) {
   int found = 0;
 
   if (getifaddrs(&ifaddr) == -1) {
-    perror("getifaddrs");
+    log_error("getifaddrs: %s", strerror(errno));
     return 0;
   }
 
@@ -47,7 +46,6 @@ static int is_valid_local_ip(const char *ip_str) {
   return found;
 }
 
-// --- Argument parser ---
 static error_t parse_opt(int key, char *arg, struct argp_state *state) {
   struct arguments *args = state->input;
 
@@ -70,7 +68,7 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
         args->address[INET_ADDRSTRLEN - 1] = '\0';
         args->address_set = 1;
       } else {
-        argp_usage(state); // Too many args
+        argp_usage(state);
       }
       break;
     case ARGP_KEY_END:
@@ -78,7 +76,7 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
         argp_error(state, "Permission denied: Port 21 requires root privileges");
       }
       if (args->port != 21 && (args->port < IPPORT_RESERVED || args->port > IPPORT_USERRESERVED)) {
-        argp_error(state, "Invalid port: %d. Allowed: 21 (as root), or %d–%d",
+        argp_error(state, "Invalid port: %d. Allowed: 21 (as root), or %d-%d",
           args->port, IPPORT_RESERVED, IPPORT_USERRESERVED);
       }
       if (!is_valid_local_ip(args->address)) {
@@ -92,12 +90,9 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
   return 0;
 }
 
-// --- Argp parser definition ---
 static struct argp argp = { options, parse_opt, args_doc, doc, NULL, NULL, NULL };
 
-// Call this from main:
 int parse_arguments(int argc, char **argv, struct arguments *args) {
-  // Initialize defaults:
   args->port = FTP_PORT;
   args->port_set = 0;
   strncpy(args->address, LOCALHOST, INET_ADDRSTRLEN);
