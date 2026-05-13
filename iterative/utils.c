@@ -10,10 +10,8 @@
 #include <errno.h>
 
 void close_fd(int fd, const char *label) {
-
   if (close(fd) < 0) {
-    fprintf(stderr, "Error closing %s: ", label);
-    perror(NULL);
+    log_error("Error closing %s: %s", label, strerror(errno));
   }
 }
 
@@ -24,7 +22,7 @@ ssize_t safe_dprintf(int fd, const char *format, ...) {
   va_end(args);
 
   if (ret < 0) {
-    perror("dprintf error: ");
+    log_error("dprintf error: %s", strerror(errno));
   }
   return ret;
 }
