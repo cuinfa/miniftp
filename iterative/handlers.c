@@ -74,10 +74,19 @@ void handle_TYPE(const char *args) {
 
 void handle_PORT(const char *args) {
   ftp_session_t *sess = session_get();
-  (void)args;
-  (void)sess;
-
-  // Placeholder
+  
+  if (!args || strlen(args) == 0) {
+    safe_dprintf(sess->control_sock, MSG_501); // Missing parameter
+    return;
+  }
+ 
+  if (dtp_parse_port(args, sess) < 0) {
+    safe_dprintf(sess->control_sock, MSG_501); // Bad syntax / invalid address
+    return;
+  }
+ 
+  safe_dprintf(sess->control_sock, MSG_200); // Command okay
+  log_info("PORT command accepted");
 }
 
 void handle_RETR(const char *args) {

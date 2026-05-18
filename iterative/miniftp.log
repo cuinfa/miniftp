@@ -1,8 +1,0 @@
-[2026-05-13 03:54:59] [INFO ] *** miniftp log iniciado (pid=2428) — /home/facu/Escritorio/miniftp/iterative/miniftp.log ***
-[2026-05-13 03:54:59] [INFO ] *** syslog también activo ***
-[2026-05-13 03:54:59] [INFO ] Starting server on 127.0.0.1:21
-[2026-05-13 03:54:59] [INFO ] Listening on 127.0.0.1:21
-[2026-05-13 03:54:59] [INFO ] [DEBUG] Setting up signal handlers in PID 2428
-[2026-05-13 03:54:59] [INFO ] [DEBUG] SIGINT handler installed in PID 2428
-[2026-05-13 03:55:23] [ERROR] SIGINT handler called (count = 1) in PID 2428
-[2026-05-13 03:55:23] [INFO ] [+] SIGINT received. Shutting down...
